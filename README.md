@@ -47,33 +47,13 @@ text
 
 ---
 
-## 💻 Como Executar Localmente
-
-1. **Clone o repositório**
-   ```bash
-   git clone https://github.com/sergioelias-powercraftstudio/powercraftstudio-pt.git
-Acesse a pasta do projeto
-
-bash
-cd powercraftstudio-pt
-Abra o arquivo index.html no navegador
-
-Clique duas vezes no arquivo ou use uma extensão como Live Server no VS Code.
-
-📦 Deploy Automatizado
-O site é publicado automaticamente via GitHub Pages sempre que há um novo commit na branch main.
-
-URL de produção: https://powercraftstudio.com.br
-
-URL de staging: https://sergioelias-powercraftstudio.github.io/powercraftstudio-pt/
-
 🤝 Contribuição
 Este é um projeto institucional. No momento, não aceitamos contribuições externas. Para sugestões ou relatar problemas, entre em contato conosco diretamente.
 
 📞 Contato
 Site: https://powercraftstudio.com.br
 
-E-mail: contato@powercraftstudio.com.br
+E-mail: contract@powercraftstudio.digital
 
 📄 Licença
 Este projeto está licenciado sob a MIT License – consulte o arquivo LICENSE para mais informações.
