@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Da Arquitetura à Entrega - Casos</title>
+    <style>
+        /* ================================================================
+           CSS COMPLETO - MANTIDO EXATAMENTE IGUAL AO ORIGINAL
+           ================================================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a1a;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        #case-applications {
+            padding: 60px 80px;
+            height: 100vh;
+            background: linear-gradient(135deg, #0a0a1a 0%, #1a1a2e 50%, #0a0a1a 100%);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container-wrapper {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .section-top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .section-title-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .title-bar {
+            width: 6px;
+            height: 48px;
+            background: #0d6efd;
+            flex-shrink: 0;
+        }
+
+        .section-page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            height: 48px;
+            line-height: 1;
+        }
+
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-uniform {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px, solid #9CA3AF;
+            background: rgba(255, 255, 255, 0.05);
+            color: #e5e7eb;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            padding: 0;
+            font-family: inherit;
+            position: relative;
+        }
+
+        .btn-uniform:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            border-color: #9CA3AF;
+        }
+
+        .btn-uniform.lang-active {
+            color: #ffffff;
+            background: #0d6efd;
+            border-color: #0d6efd;
+            box-shadow: 0 0 20px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-uniform.lang-active:hover {
+            background: #0b5ed7;
+            border-color: #0b5ed7;
+            color: #ffffff;
+        }
+
+        .tooltip-container-top {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-container-top .custom-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            width: 160px;
+            background: rgba(16, 185, 129, 0.9);
+            color: #ffffff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 6px 12px;
+            position: absolute;
+            z-index: 10;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: opacity 0.3s ease;
+            font-size: 12px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            pointer-events: none;
+        }
+
+        .tooltip-container-top .custom-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: rgba(16, 185, 129, 0.9);
+        }
+
+        .tooltip-container-top:hover .custom-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .cases-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 10px 0;
+        }
+
+        .case-row {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .case-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .case-row-left {
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .case-row-right {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .case-row-inner {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            width: auto;
+        }
+
+        .case-planned-card {
+            flex: 0 0 260px;
+            max-width: 260px;
+            cursor: pointer;
+            border-radius: 0px;
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-decoration: none;
+            display: block;
+        }
+
+        .case-planned-card,
+        .case-planned-card * {
+            cursor: pointer;
+        }
+
+        .case-planned-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(16, 185, 129, 0.15);
+            border-color: rgba(16, 185, 129, 0.3);
+        }
+
+        .case-spacer {
+            flex: 0 0 80px;
+            width: 80px;
+        }
+
+        .case-planned-image {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: #1a1a2e;
+            width: 100%;
+            height: 100%;
+        }
+
+        .case-planned-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+
+        .case-planned-card:hover .case-planned-image img {
+            transform: scale(1.05);
+        }
+
+        .case-planned-title {
+            position: absolute;
+            bottom: 0px;
+            left: 0;
+            right: 0;
+            text-align: left;
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: 400;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 8px 16px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .case-planned-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 24px;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .case-planned-card:hover .case-planned-overlay {
+            opacity: 1;
+        }
+
+        .case-planned-summary {
+            color: #ffffff;
+            text-align: center;
+            max-width: 90%;
+        }
+
+        .case-planned-summary p {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #e5e7eb;
+            margin: 0;
+        }
+
+        /* RESPONSIVIDADE - MANTIDA IGUAL */
+        @media (max-width: 1024px) {
+            #case-applications { padding: 30px 30px; }
+            .case-planned-card { flex: 0 0 240px; max-width: 240px; }
+            .case-spacer { flex: 0 0 40px; width: 40px; }
+            .section-page-title { font-size: 26px; }
+            .case-planned-title { font-size: 12px; bottom: 16px; padding: 6px 12px; }
+            .case-planned-summary p { font-size: 11px; }
+            .case-row { margin-bottom: 20px; }
+        }
+
+        @media (max-width: 768px) {
+            #case-applications { padding: 20px 20px; height: auto; min-height: 100vh; overflow-y: auto; align-items: flex-start; padding-top: 30px; }
+            .section-top-header { flex-direction: column; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+            .header-controls { width: 100%; justify-content: flex-start; gap: 8px; }
+            .case-planned-card { flex: 0 0 180px; max-width: 180px; }
+            .case-planned-image { aspect-ratio: 4/3; }
+            .case-row-left, .case-row-right { justify-content: center; }
+            .case-row-inner { flex-wrap: wrap; justify-content: center; gap: 12px; }
+            .case-spacer { display: none; }
+            .case-planned-title { font-size: 10px; bottom: 8px; padding: 4px 10px; letter-spacing: 0.5px; line-height: 1.2; }
+            .section-page-title { font-size: 20px; height: 36px; }
+            .case-row { margin-bottom: 12px; }
+            .btn-uniform { width: 40px; height: 40px; font-size: 11px; border-width: 1px; }
+            .title-bar { height: 36px; width: 5px; }
+            .section-title-wrapper { gap: 12px; }
+        }
+
+        @media (max-width: 600px) {
+            .case-planned-card { flex: 0 0 155px; max-width: 155px; }
+            .case-planned-image { aspect-ratio: 4/3; }
+            .case-planned-title { font-size: 9px; bottom: 6px; padding: 3px 8px; letter-spacing: 0.3px; }
+            .case-row-inner { gap: 10px; }
+            #case-applications { padding: 16px 14px; padding-top: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            #case-applications { padding: 12px 10px; padding-top: 16px; }
+            .case-planned-card { flex: 0 0 130px; max-width: 130px; }
+            .case-planned-image { aspect-ratio: 4/3; }
+            .case-planned-title { font-size: 8px; bottom: 4px; padding: 2px 6px; letter-spacing: 0.2px; line-height: 1.1; }
+            .case-row-inner { gap: 8px; }
+            .section-page-title { font-size: 16px; height: 30px; }
+            .title-bar { height: 30px; width: 4px; }
+            .section-title-wrapper { gap: 8px; }
+            .btn-uniform { width: 34px; height: 34px; font-size: 9px; border-width: 1px; }
+            .case-planned-summary p { font-size: 9px; line-height: 1.3; }
+            .case-planned-overlay { padding: 12px; }
+            .case-row { margin-bottom: 8px; }
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 0.35rem;
+            color: var(--text-primary);
+            font-size: 0.68rem;
+            flex-shrink: 0;
+            background: var(--bg-light);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ============================================================ -->
+    <!-- SECTION: CASE APPLICATIONS - LAYOUT PLANEJADO                 -->
+    <!-- ============================================================ -->
+    <section id="case-applications">
+        <div class="container-wrapper">
+
+            <!-- HEADER -->
+            <div class="section-top-header">
+                <div class="section-title-wrapper">
+                    <div class="title-bar"></div>
+                    <h2 class="section-page-title" id="pageTitle">Da Arquitetura à Entrega</h2>
+                </div>
+                <div class="header-controls">
+                    <!-- Grupo de botões de idioma (EN/PT) - SERÁ OCULTADO -->
+                    <div class="lang-toggle-group">
+                        <div class="tooltip-container-top">
+                            <button class="btn-uniform" data-lang="EN" onclick="switchLanguage('en')">
+                                <span class="flag">EN</span>
+                            </button>
+                            <span class="custom-tooltip" id="tooltipEN">Idioma Inglês</span>
+                        </div>
+                        <div class="tooltip-container-top">
+                            <button class="btn-uniform lang-active" data-lang="PT" onclick="switchLanguage('pt')">
+                                <span class="flag">PT</span>
+                            </button>
+                            <span class="custom-tooltip" id="tooltipPT">Idioma Português</span>
+                        </div>
+                    </div>
+
+                    <!-- Botão Back (voltar) - MANTIDO -->
+                    <div class="tooltip-container-top">
+                        <a href="javascript:void(0)" onclick="goBackToIndex()" class="btn-uniform" aria-label="Return to homepage">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+                                <path d="M5 5L19 19M19 5L5 19" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                            </svg>
+                        </a>
+                        <span class="custom-tooltip" id="tooltipBack">Voltar</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BUSINESS CASES - LAYOUT COM DESLOCAMENTO VISUAL -->
+            <div class="cases-container">
+
+                <!-- BLOCO A - Linha Superior (Alinhado à Esquerda) -->
+                <div class="case-row case-row-left">
+                    <div class="case-row-inner">
+                        <!-- Case 1: Global Spend Management -->
+                        <a href="gma.html" class="case-planned-card" data-case="0">
+                            <div class="case-planned-image">
+                                <img src="img-global-spend-management.jpg" alt="Global Spend Management" onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/10B981?text=Global+Spend'">
+                                <div class="case-planned-title" id="caseTitle0">GESTÃO GLOBAL DE GASTOS</div>
+                                <div class="case-planned-overlay">
+                                    <div class="case-planned-summary">
+                                        <p id="caseDesc0">Um mecanismo centralizado de despesas que automatiza aprovações em múltiplas moedas, aplica limites regionais de conformidade e oferece rastreabilidade completa para auditoria financeira.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="case-spacer"></div>
+
+                        <!-- Case 2: Incentive Compensation Management -->
+                        <a href="icma.html" class="case-planned-card" data-case="1">
+                            <div class="case-planned-image">
+                                <img src="img-incentive-compensation.jpg" alt="Incentive Compensation Management" onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/10B981?text=Incentive+Compensation'">
+                                <div class="case-planned-title" id="caseTitle1">COMPENSAÇÃO POR INCENTIVO</div>
+                                <div class="case-planned-overlay">
+                                    <div class="case-planned-summary">
+                                        <p id="caseDesc1">Cálculos automatizados de comissões, rastreamento de desempenho em tempo real e integração perfeita com sistemas de folha de pagamento.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- BLOCO B - Linha Inferior (Alinhado à Direita) -->
+                <div class="case-row case-row-right">
+                    <div class="case-row-inner">
+                        <!-- Case 3: Identity & Customer Onboarding -->
+                        <a href="icoa.html" class="case-planned-card" data-case="2">
+                            <div class="case-planned-image">
+                                <img src="img-customer-onboarding.jpg" alt="Identity & Customer Onboarding" onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/10B981?text=Customer+Onboarding'">
+                                <div class="case-planned-title" id="caseTitle2">ONBOARDING DE CLIENTES</div>
+                                <div class="case-planned-overlay">
+                                    <div class="case-planned-summary">
+                                        <p id="caseDesc2">Verificação de identidade simplificada, processamento automatizado de documentos e gerenciamento seguro da jornada do cliente.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="case-spacer"></div>
+
+                        <!-- Case 4: Resource Request & Approval -->
+                        <a href="rra.html" class="case-planned-card" data-case="3">
+                            <div class="case-planned-image">
+                                <img src="img-resources-requests-approval.jpg" alt="Resource Request & Approval" onerror="this.src='https://via.placeholder.com/400x300/1a1a2e/10B981?text=Resource+Request'">
+                                <div class="case-planned-title" id="caseTitle3">SOLICITAÇÃO DE RECURSOS</div>
+                                <div class="case-planned-overlay">
+                                    <div class="case-planned-summary">
+                                        <p id="caseDesc3">Fluxo de trabalho de provisionamento de recursos de ponta a ponta com cadeias de aprovação dinâmicas e planejamento de capacidade.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+            </div><!-- /cases-container -->
+            <div class="footer-note">© 2026 PowerCraftStudio. Todos os direitos reservados.</div>
+
+        </div><!-- /container-wrapper -->
+        
+    </section>
+
+    <!-- ============================================================ -->
+    <!-- SCRIPTS -->
+    <!-- ============================================================ -->
+    <script>
+        // ============================================================
+        // DADOS DOS CASES (i18n) - MANTIDOS, MAS APENAS PT É USADO
+        // ============================================================
+        const translations = {
+            en: {
+                title: 'From Architecture to Delivery',
+                back: 'Back to homepage',
+                tooltipEN: 'Language English US',
+                tooltipPT: 'Language Português BR',
+                'cases.case1.title': 'GLOBAL SPEND MANAGEMENT',
+                'cases.case1.desc': 'A centralized expense engine that automates multi-currency approvals, enforces regional compliance caps, and delivers full financial audit traceability across distributed corporate structures.',
+                'cases.case2.title': 'INCENTIVE COMPENSATION',
+                'cases.case2.desc': 'Automated commission calculations, real-time performance tracking, and seamless integration with payroll systems for accurate and timely compensation.',
+                'cases.case3.title': 'CUSTOMER ONBOARDING',
+                'cases.case3.desc': 'Streamlined identity verification, automated document processing, and secure customer journey management from registration to activation.',
+                'cases.case4.title': 'RESOURCES REQUEST',
+                'cases.case4.desc': 'End-to-end resource provisioning workflow with dynamic approval chains, capacity planning, and real-time availability tracking.'
+            },
+            pt: {
+                title: 'Da Arquitetura à Entrega',
+                back: 'Voltar',
+                tooltipEN: 'Idioma Inglês',
+                tooltipPT: 'Idioma Português',
+                'cases.case1.title': 'GESTÃO GLOBAL DE GASTOS',
+                'cases.case1.desc': 'Um mecanismo centralizado de despesas que automatiza aprovações em múltiplas moedas, aplica limites regionais de conformidade e oferece rastreabilidade completa para auditoria financeira.',
+                'cases.case2.title': 'COMPENSAÇÃO POR INCENTIVO',
+                'cases.case2.desc': 'Cálculos automatizados de comissões, rastreamento de desempenho em tempo real e integração perfeita com sistemas de folha de pagamento.',
+                'cases.case3.title': 'ONBOARDING DE CLIENTES',
+                'cases.case3.desc': 'Verificação de identidade simplificada, processamento automatizado de documentos e gerenciamento seguro da jornada do cliente.',
+                'cases.case4.title': 'SOLICITAÇÃO DE RECURSOS',
+                'cases.case4.desc': 'Fluxo de trabalho de provisionamento de recursos de ponta a ponta com cadeias de aprovação dinâmicas e planejamento de capacidade.'
+            }
+        };
+
+        let currentLang = 'pt';
+        let fromSection = 'hero';
+
+        // ============================================================
+        // FUNÇÃO: Trocar idioma (desativada, apenas para compatibilidade)
+        // ============================================================
+        function switchLanguage(lang) {
+            // Não faz nada - idioma é fixo em PT
+            console.log('Troca de idioma desativada (modo PT fixo)');
+            return false;
+        }
+
+        // ============================================================
+        // FUNÇÃO: Atualizar links dos cards (força PT sempre)
+        // ============================================================
+        function updateCaseLinks() {
+            const cards = document.querySelectorAll('.case-planned-card');
+            const files = ['gma.html', 'icma.html', 'icoa.html', 'rra.html'];
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const from = urlParams.get('from') || 'hero';
+            
+            cards.forEach((card, index) => {
+                if (index < files.length) {
+                    // Força o idioma PT sempre
+                    card.href = files[index] + '?lang=pt&from=' + from;
+                }
+            });
+        }
+
+        // ============================================================
+        // FUNÇÃO: Voltar para a homepage
+        // ============================================================
+        function goBackToIndex() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const fromSection = urlParams.get('from') || 'hero';
+            
+            const anchorMap = {
+                'what-you-get': 'what-you-get',
+                'game-on': 'game-on',
+                'cases': 'what-you-get'
+            };
+            const anchor = anchorMap[fromSection] || '';
+            
+            let url = 'index.html?lang=pt';
+            if (anchor) {
+                url += '&anchor=' + anchor;
+            }
+            
+            window.location.href = url;
+        }
+
+        // ============================================================
+        // INICIALIZAÇÃO
+        // ============================================================
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Cases page loaded (modo PT fixo)');
+            
+            // =========================================================
+            // FORÇA PT FIXO E OCULTA TOGGLES
+            // =========================================================
+            // 1. Oculta os botões de idioma
+            const toggleGroup = document.querySelector('.lang-toggle-group');
+            if (toggleGroup) toggleGroup.style.display = 'none';
+            
+            // 2. Desativa os botões de idioma
+            document.querySelectorAll('.lang-toggle-group button').forEach(btn => {
+                btn.style.pointerEvents = 'none';
+                btn.style.opacity = '0.5';
+            });
+
+            // 3. Bloqueia a função switchLanguage
+            window.switchLanguage = function() {
+                console.log('Troca de idioma desativada (modo PT fixo)');
+                return false;
+            };
+
+            // 4. Força o título e textos em PT (já estão no HTML, mas garante)
+            const titleEl = document.getElementById('pageTitle');
+            if (titleEl) titleEl.textContent = translations.pt.title;
+
+            const tooltipBack = document.getElementById('tooltipBack');
+            if (tooltipBack) tooltipBack.textContent = translations.pt.back;
+
+            // 5. Atualiza os casos (títulos e descrições)
+            for (let i = 0; i < 4; i++) {
+                const titleElCase = document.getElementById('caseTitle' + i);
+                const descElCase = document.getElementById('caseDesc' + i);
+                if (titleElCase) {
+                    const key = 'cases.case' + (i+1) + '.title';
+                    titleElCase.textContent = translations.pt[key] || titleElCase.textContent;
+                }
+                if (descElCase) {
+                    const key = 'cases.case' + (i+1) + '.desc';
+                    descElCase.textContent = translations.pt[key] || descElCase.textContent;
+                }
+            }
+
+            // 6. Atualiza os links dos cards
+            updateCaseLinks();
+
+            // 7. Força o idioma no localStorage (opcional)
+            localStorage.setItem('preferredLang', 'pt');
+
+            console.log('Modo PT fixo ativado');
+        });
+    </script>
+
+</body>
+</html>
