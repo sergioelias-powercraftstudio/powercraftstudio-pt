@@ -1,4 +1,3 @@
-markdown
 # PowerCraftStudio
 
 Site institucional oficial da PowerCraftStudio, desenvolvido para apresentar nossos serviços, produtos e portfólio exclusivamente em português do Brasil.
@@ -23,8 +22,6 @@ powercraftstudio-pt/
 ├── assets/ # Imagens, ícones e demais recursos
 ├── README.md # Documentação do projeto
 └── LICENSE # Licença de uso
-
-text
 
 ---
 
